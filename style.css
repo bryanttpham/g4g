@@ -1,5 +1,42 @@
-#apple
+
+
+
+#score
+{
+    background-color: #FDE992;
+    float:left;
+    width: 19%;
+    height: 100vh;
+    margin:0;
+    padding:0;
+    text-align: center;
+
+  
+}
+
+canvas {
+    float:left;
+    margin:0;
+    padding:0;
+}
+body{
+    margin:0;
+    }
+
+#earth1
+{
+    position:relative;
+    top:10%;
+}
+
+#turtle1
+{    position:relative;
+    top:40%;
+}
+
+#message
 {
     position:absolute;
-    
+    left:72%;
+    top:42%;
 }
