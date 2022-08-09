@@ -11,7 +11,6 @@ var clientHeight = document.getElementById('game').clientHeight;
 
 var score = document.getElementById("score");
 
-
 //variables to keep track of attempts
 var successfulTries=0;
 var failedTries=0;
@@ -71,7 +70,7 @@ recycle4.src='./img/recycle/recycle4.png'
 var recycle5 = new Image();
 recycle5.src='./img/recycle/recycle5.png'
 
-// wrong messages
+// wrong messages 
 // var wrongCompost = new Image();
 wrongCompost = './img/Wrong_Answer_Speech_Bubble/Wrong_Compost-removebg-preview.png';
 // var WrongRecycle = new Image();
@@ -92,13 +91,16 @@ right4 = './img/Correct_Answer_Speech_Bubbles/Sofishticated.png'
 // var right5 = new Image();
 right5 = './img/Correct_Answer_Speech_Bubbles/YeahBuoy.png'
 
-messageBub = document.getElementById("message");
-messageBub.style.display = "none";
+
+
 
 trash.push(trash1,trash2,trash3,trash4,trash5);
 compost.push(compost1,compost2,compost3,compost4,compost5);
 recycle.push(recycle1,recycle2,recycle3,recycle4,recycle5);
 rightMessages.push(right1,right2,right3,right4,right5);
+
+messageBub = document.getElementById("message");
+messageBub.style.display = "none";
 
 
 
@@ -176,7 +178,6 @@ window.onload= function(){
     loadAllTrash(compost,"compost");
     loadAllTrash(recycle,"recycle");
     loadAllTrash(trash,"trash");
-
 }// put your image src here!
 
 
@@ -233,8 +234,9 @@ function updateProgressBar(progressBar, value) {
     progressBar.querySelector(".progress__text").textContent = `${value}%`;
 }
 
-function handleMouseUp(e){
+ function handleMouseUp(e){
     // return if we're not dragging
+    
     if(!isDragging){return;}
     // tell the browser we're handling this event
     e.preventDefault();
@@ -245,12 +247,14 @@ function handleMouseUp(e){
     mouseX=parseInt(e.clientX-offsetX);
     mouseY=parseInt(e.clientY-offsetY);
 
+    console.log(messageBub);
+
     //trash bin
-    if(mouseX>0 && mouseX<0+300 && mouseY>(3/5)*clientHeight && mouseY<(3/5)*clientHeight+300 && shapes[selectedShapeIndex].type=="trash")
+    if(mouseX>0 && mouseX<0+300 && mouseY>(3/5)*clientHeight && mouseY<(3/5)*clientHeight+300 && shapes[selectedShapeIndex].type=="trash" && !dontDraw.includes(selectedShapeIndex))
     {
         console.log("successful trash categorization");
         successfulTries++;
-        messageBub.src = rightMessages[Math.round(Math.random()*5)];
+        messageBub.src = rightMessages[Math.floor(Math.random() * 5)];
         messageBub.style.display = "block";
         updateProgressBar(pBar, successfulTries/15)
         dontDraw.push(selectedShapeIndex);
@@ -259,11 +263,11 @@ function handleMouseUp(e){
 
 
     }
-    else if(mouseX>(1/3)*clientWidth && mouseX<(1/3)*clientWidth+300 && mouseY>(3/5)*clientHeight && mouseY<(3/5)*clientHeight+300 && shapes[selectedShapeIndex].type=="recycle")
+    else if(mouseX>(1/3)*clientWidth && mouseX<(1/3)*clientWidth+300 && mouseY>(3/5)*clientHeight && mouseY<(3/5)*clientHeight+300 && shapes[selectedShapeIndex].type=="recycle" && !dontDraw.includes(selectedShapeIndex))
     {
         console.log("successful recycling categorization");
         successfulTries++;
-        messageBub.src = rightMessages[Math.round(Math.random()*5)];
+        messageBub.src = rightMessages[Math.floor(Math.random() * 5)];
         messageBub.style.display = "block";
         console.log(successfulTries/15);
         updateProgressBar(pBar, successfulTries/15);
@@ -271,11 +275,11 @@ function handleMouseUp(e){
         drawAll();
 
     }
-    else if(mouseX>(2/3)*clientWidth && mouseX<(2/3)*clientWidth+300 && mouseY>(3/5)*clientHeight && mouseY<(3/5)*clientHeight+300 && shapes[selectedShapeIndex].type=="compost")
+    else if(mouseX>(2/3)*clientWidth && mouseX<(2/3)*clientWidth+300 && mouseY>(3/5)*clientHeight && mouseY<(3/5)*clientHeight+300 && shapes[selectedShapeIndex].type=="compost" && !dontDraw.includes(selectedShapeIndex))
     {
         console.log("successful composting categorization");
         successfulTries++;
-        messageBub.src = rightMessages[Math.round(Math.random()*5)];
+        messageBub.src = rightMessages[Math.floor(Math.random() * 5)];
         messageBub.style.display = "block";
         updateProgressBar(pBar, successfulTries/15)
         dontDraw.push(selectedShapeIndex);
