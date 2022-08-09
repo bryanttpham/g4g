@@ -364,11 +364,32 @@ function handleMouseMove(e){
 // redraw all shapes in their current positions
 function drawAll(){
     ctx.clearRect(0,0,cw,ch);
-    if(successfulTries==5)
+    if(successfulTries==6)
+    {
+        document.getElementById("earth1").src='./img/earth2.png';
+
+    }
+    else if(successfulTries==9)
+    {
+        document.getElementById("earth1").src='./img/earth3.png';
+
+    }
+    else if(successfulTries==12)
+    {
+        document.getElementById("earth1").src='./img/earth4.png';
+
+    }
+    else if(successfulTries==15)
     {
         document.getElementById("earth1").src='./img/earth5.png';
 
     }
+    else if(successfulTries==15)
+    {
+        document.getElementById("earth1").src='./img/earth5.png';
+
+    }
+
     ctx.drawImage(background,0,0,clientWidth,clientHeight);
     drawBin();
     for(var i=0;i<shapes.length;i++){
