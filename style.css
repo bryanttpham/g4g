@@ -1,6 +1,5 @@
 
 
-
 #score
 {
     background-color: #FDE992;
@@ -10,9 +9,9 @@
     margin:0;
     padding:0;
     text-align: center;
-
-  
 }
+
+
 
 canvas {
     float:left;
@@ -31,12 +30,39 @@ body{
 
 #turtle1
 {    position:relative;
-    top:40%;
+    top:34%;
 }
 
 #message
 {
     position:absolute;
     left:72%;
-    top:42%;
+    top:38%;
 }
+
+.progress {
+    top: 15%;
+    left: 10%;
+    position: relative;
+    width: 290px;
+    height: 65px;
+    background: #9cbab4;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+  .progress__fill {
+    width: 0%;
+    height: 100%;
+    background: #009579;
+    transition: all 0.2s;
+  }
+
+  .progress__text {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    font: bold 26px "Quicksand", sans-serif;
+    color: #ffffff;
+  }  

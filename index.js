@@ -71,10 +71,34 @@ recycle4.src='./img/recycle/recycle4.png'
 var recycle5 = new Image();
 recycle5.src='./img/recycle/recycle5.png'
 
+// wrong messages
+// var wrongCompost = new Image();
+wrongCompost = './img/Wrong_Answer_Speech_Bubble/Wrong_Compost-removebg-preview.png';
+// var WrongRecycle = new Image();
+WrongRecycle = './img/Wrong_Answer_Speech_Bubble/WrongRecycle-removebg-preview__1_-removebg-preview.png';
+// var WrongTrash = new Image();
+WrongTrash = './img/Wrong_Answer_Speech_Bubble/WrongTrash-removebg-preview.png';
+
+// right messages
+var rightMessages = [];
+// var right1 = new Image();
+right1 = './img/NEWfin-tastic-removebg-preview.png'
+// var right2 = new Image();
+right2 = './img/Correct_Answer_Speech_Bubbles/TurtelyAwesome.png'
+// var right3 = new Image(); 
+right3 = './img/Correct_Answer_Speech_Bubbles/Sandtastic.png'
+// var right4 = new Image();
+right4 = './img/Correct_Answer_Speech_Bubbles/Sofishticated.png'
+// var right5 = new Image();
+right5 = './img/Correct_Answer_Speech_Bubbles/YeahBuoy.png'
+
+messageBub = document.getElementById("message");
+messageBub.style.display = "none";
+
 trash.push(trash1,trash2,trash3,trash4,trash5);
 compost.push(compost1,compost2,compost3,compost4,compost5);
 recycle.push(recycle1,recycle2,recycle3,recycle4,recycle5);
-
+rightMessages.push(right1,right2,right3,right4,right5);
 
 
 
@@ -90,7 +114,7 @@ bin1.src='./img/bin1.png'
 bin2.src='./img/bin2.png'
 bin3.src='./img/bin3.png'
 
-
+const pBar = document.querySelector(".progress");
 
 
 //Randomize trash
@@ -115,8 +139,8 @@ canvas.onresize=function(e){ reOffset(); }
 
 function handleLoad(imageObj,xVal,yVal,widthVal,heightVal,trash)
 {
-    console.log("behing handled");
-    console.log(imageObj);
+    // console.log("behing handled");
+    // console.log(imageObj);
     shapes.push( {x:xVal, y:yVal, width:widthVal, height:heightVal , image:imageObj, type:trash});
     //    shapes.push( {x:xVal, y:yVal, width:widthVal, height:heightVal , image:imageObj,type:trash});
 
@@ -136,11 +160,11 @@ function loadAllTrash(trashArray,trashType)
     {
         var spawnX=Math.random() * ((this.cw-150) - 0) + 0;
         var spawnY=Math.random() * ((this.ch-500) - 0) + 0;
-        console.log(spawnX,spawnY);
+        // console.log(spawnX,spawnY);
 
         var randomTrash= Math.floor(Math.random() * 5);
 
-        console.log(randomTrash);
+        // console.log(randomTrash);
         handleLoad(trashArray[randomTrash],spawnX,spawnY,150,150,trashType);
         spawnX+=200;
     }
@@ -151,7 +175,6 @@ function loadAllTrash(trashArray,trashType)
 window.onload= function(){
     loadAllTrash(compost,"compost");
     loadAllTrash(recycle,"recycle");
-
     loadAllTrash(trash,"trash");
 
 }// put your image src here!
@@ -183,7 +206,7 @@ function handleMouseDown(e){
     // calculate the current mouse position
     startX=parseInt(e.clientX-offsetX);
     startY=parseInt(e.clientY-offsetY);
-    console.log(startX);
+    // console.log(startX);
     // test mouse position against all shapes
     // post result if mouse is in a shape
     for(var i=0;i<shapes.length;i++){
@@ -203,6 +226,13 @@ function handleMouseDown(e){
     }
 }
 
+// update progress bar finction
+function updateProgressBar(progressBar, value) {
+    value = Math.round(value *100);
+    progressBar.querySelector(".progress__fill").style.width = `${value}%`;
+    progressBar.querySelector(".progress__text").textContent = `${value}%`;
+}
+
 function handleMouseUp(e){
     // return if we're not dragging
     if(!isDragging){return;}
@@ -220,6 +250,9 @@ function handleMouseUp(e){
     {
         console.log("successful trash categorization");
         successfulTries++;
+        messageBub.src = rightMessages[Math.round(Math.random()*5)];
+        messageBub.style.display = "block";
+        updateProgressBar(pBar, successfulTries/15)
         dontDraw.push(selectedShapeIndex);
         drawAll();
         
@@ -230,6 +263,10 @@ function handleMouseUp(e){
     {
         console.log("successful recycling categorization");
         successfulTries++;
+        messageBub.src = rightMessages[Math.round(Math.random()*5)];
+        messageBub.style.display = "block";
+        console.log(successfulTries/15);
+        updateProgressBar(pBar, successfulTries/15);
         dontDraw.push(selectedShapeIndex);
         drawAll();
 
@@ -238,6 +275,9 @@ function handleMouseUp(e){
     {
         console.log("successful composting categorization");
         successfulTries++;
+        messageBub.src = rightMessages[Math.round(Math.random()*5)];
+        messageBub.style.display = "block";
+        updateProgressBar(pBar, successfulTries/15)
         dontDraw.push(selectedShapeIndex);
         drawAll();
 
@@ -246,6 +286,8 @@ function handleMouseUp(e){
     {
         console.log("failed trash categorization");
         failedTries++;
+        messageBub.style.display = "block";
+        messageBub.src = WrongTrash;
         var selectedShape=shapes[selectedShapeIndex];
         selectedShape.x=initialClickX;
         selectedShape.y=initialClickY;
@@ -256,6 +298,8 @@ function handleMouseUp(e){
     {
         console.log("failed recycling categorization");
         failedTries++;
+        messageBub.style.display = "block";
+        messageBub.src = WrongRecycle;
         var selectedShape=shapes[selectedShapeIndex];
         selectedShape.x=initialClickX;
         selectedShape.y=initialClickY;
@@ -266,14 +310,15 @@ function handleMouseUp(e){
     {
         console.log("failed compost categorization");
         failedTries++;
+        messageBub.style.display = "block";
+        messageBub.src = wrongCompost;
         var selectedShape=shapes[selectedShapeIndex];
         selectedShape.x=initialClickX;
         selectedShape.y=initialClickY;
         drawAll();
 
     }
-    console.log(successfulTries);
-
+    console.log(`Successful tries ${successfulTries}`);
 
 
 }
@@ -372,10 +417,10 @@ var mySound = new sound("music.wav");
 
 function turnMusicOn()
 {
-    console.log("entered");
+    // console.log("entered");
     if(music==0)
     {
-        console.log("turn music on");
+        // console.log("turn music on");
         mySound.play();
         music=1;
     }
@@ -383,5 +428,4 @@ function turnMusicOn()
         mySound.pause();
         music=0;
     }
-
 }
