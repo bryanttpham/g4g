@@ -11,6 +11,10 @@ var clientHeight = document.getElementById('game').clientHeight;
 
 var score = document.getElementById("score");
 
+start = document.getElementById("start");
+start.style.display = "block";
+start.onclick = function() { start.style.display = "none"; }
+
 //variables to keep track of attempts
 var successfulTries=0;
 var failedTries=0;
@@ -101,6 +105,9 @@ rightMessages.push(right1,right2,right3,right4,right5);
 
 messageBub = document.getElementById("message");
 messageBub.style.display = "none";
+
+end = document.getElementById("end");
+end.style.display = "none";
 
 
 
@@ -232,6 +239,10 @@ function updateProgressBar(progressBar, value) {
     value = Math.round(value *100);
     progressBar.querySelector(".progress__fill").style.width = `${value}%`;
     progressBar.querySelector(".progress__text").textContent = `${value}%`;
+
+    if(value == "100"){
+        end.style.display = "block";
+    }
 }
 
  function handleMouseUp(e){
@@ -257,6 +268,9 @@ function updateProgressBar(progressBar, value) {
         messageBub.src = rightMessages[Math.floor(Math.random() * 5)];
         messageBub.style.display = "block";
         updateProgressBar(pBar, successfulTries/15)
+        if(successfulTries/15 == "100"){
+            end.style.display = "block";
+        }
         dontDraw.push(selectedShapeIndex);
         drawAll();
         
@@ -272,6 +286,9 @@ function updateProgressBar(progressBar, value) {
         console.log(successfulTries/15);
         updateProgressBar(pBar, successfulTries/15);
         dontDraw.push(selectedShapeIndex);
+        if(successfulTries/15 == "100"){
+            end.style.display = "block";
+        }
         drawAll();
 
     }
@@ -282,6 +299,9 @@ function updateProgressBar(progressBar, value) {
         messageBub.src = rightMessages[Math.floor(Math.random() * 5)];
         messageBub.style.display = "block";
         updateProgressBar(pBar, successfulTries/15)
+        if(successfulTries/15 == "100"){
+            end.style.display = "block";
+        }
         dontDraw.push(selectedShapeIndex);
         drawAll();
 
@@ -321,6 +341,13 @@ function updateProgressBar(progressBar, value) {
         selectedShape.y=initialClickY;
         drawAll();
 
+    }
+    if(mouseY>((3/5)*clientHeight+310))
+    {
+        var selectedShape=shapes[selectedShapeIndex];
+        selectedShape.x=initialClickX;
+        selectedShape.y=initialClickY;
+        drawAll();
     }
     console.log(`Successful tries ${successfulTries}`);
 
