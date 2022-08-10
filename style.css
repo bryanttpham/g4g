@@ -44,6 +44,8 @@ body{
     position:absolute;
     left:72%;
     top:38%;
+    pointer-events: none;
+    
 }
 
 .progress {
@@ -72,3 +74,20 @@ body{
     font: bold 26px "Quicksand", sans-serif;
     color: #ffffff;
   }  
+
+  #start{
+    position:absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+}
+
+#end{
+    position:absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+}
+
